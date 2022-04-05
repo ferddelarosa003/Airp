@@ -9,16 +9,10 @@ class AssignSeatService < ApplicationService
   end
 
   def call
-    # [[1, 2], [1, 3], [2, 2]], 9
-    # [[3,2],[2,2],[1,2],[1,3]] , 11
-    result = []
     @passenger_count = 12
     @seat_counter = 0
     @sequence = eval(@seating_sequence.sequence)
     @sequence_count = @sequence.count
-    @window_seat_count = get_window_seats(@sequence)
-    @middle_seat_count = get_middle_seats(@sequence)
-    @aisle_seat_count = get_total_aisle(@sequence)
     @sequence.map do |row_col|
       @current_sequence = @sequence.index(row_col)
       row_count = row_col[0]
@@ -39,59 +33,6 @@ class AssignSeatService < ApplicationService
       data = seat_data(col, current_column, @current_sequence)
       { color: data[:color], value: @current_row }
     end
-  end
-
-  def assign_seat(seat_data)
-    return 0 if passenger_count.zero?
-
-    value = seat_counter(seat_data[:type]) unless @passenger_count.zero?
-  end
-
-  def seat_counter(seat_type)
-    if seat_type == :aisle_seat && @aisle_seat_count.positive?
-      @seat_counter += 1
-      @passenger_count -= 1
-      @aisle_seat_count -= 1
-      @seat_counter
-    # elsif seat_type == :window_seat && @window_seat_count > 0
-    #     @window_seat_count -=1
-    #     return 2
-    else
-      '0'
-    end
-  end
-
-  def get_total_aisle(array)
-    aisle_count = []
-    window_seats = [array.first, array.last]
-    middle_seats = array - window_seats
-    aisle_count << get_window_seats(array)
-    aisle_count << count_aisle(middle_seats)
-    p aisle_count
-    aisle_count.sum
-  end
-
-  def get_window_seats(array)
-    [array.first, array.last].map(&:first).sum
-  end
-
-  def get_middle_seats(array)
-    total_seats = array.map do |arr|
-      arr.inject(:*)
-    end.sum
-    mid_seats = total_seats - get_total_aisle(array) - get_window_seats(array)
-  end
-
-  def count_aisle(array)
-    aisle_count = []
-    array.map do |arr|
-      aisle_count << if arr[1] > 2
-                       (2 * arr[0])
-                     else
-                       arr.inject(:*)
-                     end
-    end
-    aisle_count.sum
   end
 
   def determine_seat(column, total_columns, s_count)
