@@ -9,3 +9,5 @@ See Dockerfile and docker-compose.yml
 * Ruby version
   ruby:3.0.1
   mysql:5.7
+
+Deployed in: https://planeseatalgorithm.herokuapp.com/ 
