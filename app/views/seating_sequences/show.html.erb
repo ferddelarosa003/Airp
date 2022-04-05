@@ -1,0 +1,55 @@
+<%= eval(@seating_sequence.sequence) %>
+<form onsubmit="seat_passengers(); return false;">
+  <label for="fname">Passengers:</label>
+  <input type="text" id="passenger"><br>
+  <input type="submit" value="Populate">
+</form>
+<table>
+<tr>
+<% @arrangements.each do |arrangement| %>
+<td>
+        <% arrangement.each_with_index do |row,index|%>
+        <table>
+        <tr>
+        <% row.each_with_index do |column,index|  %>
+        <td class=<%= "#{column[:color]}_#{column[:value]} "%> > </td>
+        <% end %>
+        </tr>
+        </table>
+     <% end %>
+</td>
+<% end %>
+</tr>
+</table>
+
+<script>
+var r_m = <%= @row_max %>
+var p_c = {}
+
+function seat_passengers(){
+  p_c.pass_count = parseInt(document.getElementById('passenger').value)
+  var blue = map("blue",r_m)
+  var green = map("green",r_m,blue)
+  map("red",r_m,green)
+ 
+}
+function map(color,r_m,value=0)
+{
+    for(var h=0; h < r_m; h++){
+      try1 = document.getElementsByClassName(color+'_'+h)
+      if(try1.length > p_c.pass_count)
+      {
+        var num = p_c.pass_count
+      }
+      else{
+        var num = try1.length
+      }
+      for (var i = 0; i < num; i++) {
+      try1[i].innerHTML = value +1
+      p_c.pass_count -= 1
+      value += 1
+      }
+    }
+      return value 
+}
+</script>

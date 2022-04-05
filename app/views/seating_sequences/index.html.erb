@@ -1,0 +1,20 @@
+<h1> Seating Sequence </h1>
+
+<table>
+  <thead>
+    <tr>
+    <th> Seating Sequence </th>
+    <th> Airplane </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @seating_sequences.each do |seating_sequence|%>
+      <tr>
+        <td><%= seating_sequence.sequence %></td>
+        <td><%= Airplane.find_by(id: seating_sequence.airplanes_id)&.name %></td>
+        <td><%= link_to "Show", seating_sequence %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= render 'form'%>

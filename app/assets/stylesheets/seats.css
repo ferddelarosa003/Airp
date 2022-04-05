@@ -1,0 +1,24 @@
+table{
+    border: 1px solid black;
+    border-collapse: inherit;
+    width: 50%;
+    table-layout:fixed;
+}
+tr{
+    height: 50px;
+}
+td{
+    font-size: 20px;
+    padding: 0px;
+    width: 30px;
+    border: 1px solid black;
+}
+td[class*="blue"]{
+    background-color: rgb(78, 78, 221);
+}
+td[class*="red"]{
+    background-color: rgb(218, 76, 76);
+}
+td[class*="green"]{
+    background-color: rgb(96, 197, 96);
+}

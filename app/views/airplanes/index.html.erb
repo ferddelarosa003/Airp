@@ -1,0 +1,17 @@
+<h1> Airplanes </h1>
+
+<table>
+  <thead>
+    <tr>
+    <th> Name </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @airplanes.each do |airplane|%>
+      <tr>
+        <td><%= airplane.name %></td>
+        <td><%= link_to "Show", airplane %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
